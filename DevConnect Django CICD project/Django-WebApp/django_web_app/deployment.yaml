@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: milca-dalsace-deployment
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mywebapp
+  template:
+    metadata:
+      labels:
+        app: mywebapp
+    spec:
+      tolerations:
+        - key: "webapp"
+          operator: "Equal"
+          value: "mywebapp"
+          effect: "NoExecute"
+      containers:
+        - name: mywebapp-container
+          image: "me-west1-docker.pkg.dev/devconnect-406515/milca-dalsace-artifacts/milca-dalsace-django-app:latest"
